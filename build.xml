@@ -1,0 +1,35 @@
+<project name = "antLab" basedir="." default="all">
+        <target name="init">
+                <property name="src.dir"        value="src"/>
+                <property name="build.dir"      value="build"/>
+                <property name="apidoc.dir"     value="apidoc"/>
+                <property name="lib.dir"        value="lib"/>
+        </target>
+        <target name="prepare" depends="init">
+                <mkdir dir="${build.dir}"/>
+                <mkdir dir="${apidoc.dir}"/>
+        </target>
+        <target name="compile" depends="prepare">
+                <javac destdir="${build.dir}" includeantruntime="false">
+                        <src path="${src.dir}"/>
+                </javac>
+                <copy file="src/Factory.png" todir="${build.dir}"/>
+                <copy file="src/Sink.png" todir="${build.dir}"/>
+                <copy file="src/Funnel.png" todir="${build.dir}"/>
+        </target>
+
+        <target name="jar" depends="compile">
+                <jar destfile="Sim.jar" basedir="${build.dir}">
+                        <manifest>
+                                <attribute name="Main-Class" value="Main"/>
+                        </manifest>
+                </jar>
+        </target>
+
+        <target name="all" depends="init,clean"/>
+
+        <target name="clean" depends="jar">
+                <delete dir="${build.dir}"/>
+                <delete dir="${apidoc.dir}"/>
+        </target>
+</project> 
